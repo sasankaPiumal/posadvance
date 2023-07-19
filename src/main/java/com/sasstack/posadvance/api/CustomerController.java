@@ -2,11 +2,12 @@ package com.sasstack.posadvance.api;
 
 import com.sasstack.posadvance.db.Database;
 import com.sasstack.posadvance.dto.request.RequestCustomerDto;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/customer")
+@RequestMapping(value = "api/v1/customer",consumes = {MediaType.APPLICATION_JSON_VALUE})
 public class CustomerController {
 
     @PostMapping()
