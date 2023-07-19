@@ -24,5 +24,5 @@ public class TestController {
         return applicationName+ " works on "+portNumber ;
     }
 
-    
+
 }
