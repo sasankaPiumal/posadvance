@@ -1,4 +1,4 @@
-package com.sasstack.posadvance.dto.response;
+package com.sasstack.posadvance.dto.core;
 
 import lombok.*;
 
@@ -7,7 +7,10 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseCustomerDto {
+public class CustomerDto {
+
+
+    private long id;
 
     private long publicId;
 
@@ -18,5 +21,4 @@ public class ResponseCustomerDto {
     private double salary;
 
     private boolean activeState;
-
 }
