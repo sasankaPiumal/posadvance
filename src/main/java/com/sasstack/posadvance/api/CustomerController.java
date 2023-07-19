@@ -1,5 +1,6 @@
 package com.sasstack.posadvance.api;
 
+import com.sasstack.posadvance.db.Database;
 import com.sasstack.posadvance.dto.request.RequestCustomerDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,8 @@ public class CustomerController {
 
     @PostMapping()
     public String createCustomer(@RequestBody RequestCustomerDto requestCustomerDto) {
-        return "Create Customer";
+        return Database.createCustomer(requestCustomerDto).toString();
+
     }
 
     @PutMapping

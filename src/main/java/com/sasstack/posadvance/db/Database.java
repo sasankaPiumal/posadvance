@@ -11,7 +11,7 @@ public class Database {
 
     public static ArrayList<CustomerDto> customerTable = new ArrayList<>();
 
-    public ResponseCustomerDto createCustomer(RequestCustomerDto dto) {
+    public static ResponseCustomerDto createCustomer(RequestCustomerDto dto) {
         CustomerDto customerDto = new CustomerDto(
                 new Random().nextInt(10001),
                 new Random().nextInt(10001),
