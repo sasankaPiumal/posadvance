@@ -2,6 +2,8 @@ package com.sasstack.posadvance.dto.core;
 
 import lombok.*;
 
+import java.sql.Blob;
+
 @Getter
 @Setter
 @ToString
@@ -21,4 +23,14 @@ public class CustomerDto {
     private double salary;
 
     private boolean activeState;
+
+    //=========================
+    private Blob fileName;
+
+    private Blob resourceUrl;
+
+    private Blob directory;
+
+    private Blob hash;
+    //=========================
 }

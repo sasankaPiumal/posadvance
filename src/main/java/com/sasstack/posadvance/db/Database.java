@@ -18,7 +18,11 @@ public class Database {
                 dto.getName(),
                 dto.getAddress(),
                 dto.getSalary(),
-                true
+                true,
+                null,
+                null,
+                null,
+                null
         );
         customerTable.add(customerDto);
 
