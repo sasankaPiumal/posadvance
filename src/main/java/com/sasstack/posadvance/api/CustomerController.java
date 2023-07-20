@@ -11,7 +11,7 @@ import javax.xml.crypto.Data;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "api/v1/customer") //consumes = {MediaType.APPLICATION_JSON_VALUE}
+@RequestMapping(value = "api/v1/customers") //consumes = {MediaType.APPLICATION_JSON_VALUE}
 public class CustomerController {
 
     @PostMapping()
