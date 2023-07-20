@@ -4,7 +4,6 @@ import com.sasstack.posadvance.db.Database;
 import com.sasstack.posadvance.dto.request.RequestCustomerDto;
 import com.sasstack.posadvance.util.StandardResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +23,18 @@ public class CustomerController {
 
     }
 
-    @PutMapping
-    public String updateCustomer() {
-        return "Update Customer";
+    @PutMapping(
+            params = {"id"}
+
+    )
+    public ResponseEntity<StandardResponse> updateCustomer(@RequestParam int id, @RequestBody RequestCustomerDto dto)
+            throws ClassNotFoundException {
+        var updatedCustomer = Database.updateCustomer(id, dto);
+        return new ResponseEntity<>(
+                new StandardResponse(201, "Customer updated!", updatedCustomer),
+                HttpStatus.CREATED
+
+        );
     }
 
     @DeleteMapping
@@ -37,7 +45,7 @@ public class CustomerController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<StandardResponse> findCustomer(@PathVariable int id) throws ClassNotFoundException {
         return new ResponseEntity<>(
-                new StandardResponse(200, "Success",Database.findCustomer(id)),
+                new StandardResponse(200, "Success", Database.findCustomer(id)),
                 HttpStatus.OK
         );
     }

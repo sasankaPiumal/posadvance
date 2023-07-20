@@ -39,8 +39,8 @@ public class Database {
     }
 
     public static ResponseCustomerDto findCustomer(int id) throws ClassNotFoundException {
-        Optional<CustomerDto> selectedCustomer = customerTable.stream().filter(e->e.getPublicId() == id).findFirst();
-        if (selectedCustomer.isPresent()){
+        Optional<CustomerDto> selectedCustomer = customerTable.stream().filter(e -> e.getPublicId() == id).findFirst();
+        if (selectedCustomer.isPresent()) {
 
             return new ResponseCustomerDto(
                     selectedCustomer.get().getPublicId(),
@@ -54,8 +54,25 @@ public class Database {
     }
 
     @PutMapping
-    public String updateCustomer() {
-        return "Update Customer";
+    public static ResponseCustomerDto updateCustomer(int id, RequestCustomerDto dto) throws ClassNotFoundException {
+        Optional<CustomerDto> selectedCust = customerTable.stream().filter(e -> e.getPublicId() == id).findFirst();
+        if (selectedCust.isPresent()) {
+            selectedCust.get().setName(dto.getName());
+            selectedCust.get().setAddress(dto.getAddress());
+            selectedCust.get().setSalary(dto.getSalary());
+
+            return new ResponseCustomerDto(
+                    selectedCust.get().getPublicId(),
+                    selectedCust.get().getName(),
+                    selectedCust.get().getAddress(),
+                    selectedCust.get().getSalary(),
+                    selectedCust.get().isActiveState()
+            );
+
+        }
+        throw new ClassNotFoundException();
+
+
     }
 
     @DeleteMapping
