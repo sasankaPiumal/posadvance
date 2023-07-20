@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "api/v1/customer") //consumes = {MediaType.APPLICATION_JSON_VALUE}
@@ -38,10 +40,10 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<StandardResponse> deleteCustomer(@PathVariable int id)  {
-            Database.deleteCustomer(id);
+    public ResponseEntity<StandardResponse> deleteCustomer(@PathVariable int id) {
+        Database.deleteCustomer(id);
         return new ResponseEntity<>(
-                new StandardResponse(204,"customer deleted!",null),
+                new StandardResponse(204, "customer deleted!", null),
                 HttpStatus.NO_CONTENT
 
         );
@@ -55,9 +57,20 @@ public class CustomerController {
         );
     }
 
-    @GetMapping("/all")
-    public String getAllCustomers() {
-        return "Find All Customers";
+    @GetMapping(
+            value = "/all",
+            params = {"page", "size", "searchText"}
+    )
+    public ResponseEntity<StandardResponse> getAllCustomers(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String searchText) {
+
+        return new ResponseEntity<>(
+                new StandardResponse(200, "Success!", Database.getAllCustomers(page,size,searchText)),
+                HttpStatus.OK
+
+        );
     }
 
 

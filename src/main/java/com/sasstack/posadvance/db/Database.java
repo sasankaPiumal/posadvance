@@ -3,10 +3,14 @@ package com.sasstack.posadvance.db;
 import com.sasstack.posadvance.dto.core.CustomerDto;
 import com.sasstack.posadvance.dto.request.RequestCustomerDto;
 import com.sasstack.posadvance.dto.response.ResponseCustomerDto;
+import com.sasstack.posadvance.dto.response.paginated.model.CustomerPaginatedDto;
+import com.sasstack.posadvance.util.StandardResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -82,6 +86,21 @@ public class Database {
             customerTable.remove(selected.get());
             return;
         }
+    }
+
+    //---------------------------------------
+    public static CustomerPaginatedDto getAllCustomers(int page,int size,String searchText){
+        List<ResponseCustomerDto> list = new ArrayList<>();
+        for (CustomerDto d: customerTable) {
+            list.add(new ResponseCustomerDto(
+                    d.getPublicId(),
+                    d.getName(),
+                    d.getAddress(),
+                    d.getSalary(),
+                    d.isActiveState()
+            ));
+        }
+        return new CustomerPaginatedDto(customerTable.size(), list);
     }
 
 }
