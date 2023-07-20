@@ -11,7 +11,6 @@ import java.sql.Blob;
 @NoArgsConstructor
 public class CustomerDto {
 
-
     private long id;
 
     private long publicId;

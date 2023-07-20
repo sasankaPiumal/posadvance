@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "api/v1/customer", consumes = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "api/v1/customer") //consumes = {MediaType.APPLICATION_JSON_VALUE}
 public class CustomerController {
 
     @PostMapping()
@@ -34,9 +34,12 @@ public class CustomerController {
         return "Delete Customer";
     }
 
-    @GetMapping
-    public String findCustomer() {
-        return "Find Customer";
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<StandardResponse> findCustomer(@PathVariable int id) throws ClassNotFoundException {
+        return new ResponseEntity<>(
+                new StandardResponse(200, "Success",Database.findCustomer(id)),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/all")
