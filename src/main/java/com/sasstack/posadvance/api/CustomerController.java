@@ -37,9 +37,14 @@ public class CustomerController {
         );
     }
 
-    @DeleteMapping
-    public String deleteCustomer() {
-        return "Delete Customer";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<StandardResponse> deleteCustomer(@PathVariable int id)  {
+            Database.deleteCustomer(id);
+        return new ResponseEntity<>(
+                new StandardResponse(204,"customer deleted!",null),
+                HttpStatus.NO_CONTENT
+
+        );
     }
 
     @GetMapping(value = "/{id}")

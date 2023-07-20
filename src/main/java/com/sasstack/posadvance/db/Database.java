@@ -76,8 +76,12 @@ public class Database {
     }
 
     @DeleteMapping
-    public String deleteCustomer() {
-        return "Delete Customer";
+    public static void deleteCustomer(int id) {
+        Optional<CustomerDto> selected = customerTable.stream().filter(e -> e.getPublicId() == id).findFirst();
+        if (selected.isPresent()) {
+            customerTable.remove(selected.get());
+            return;
+        }
     }
 
 }
