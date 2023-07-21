@@ -8,6 +8,8 @@ import com.sasstack.posadvance.entity.Customer;
 import com.sasstack.posadvance.repo.CustomerRepo;
 import com.sasstack.posadvance.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -108,9 +110,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerPaginatedDto getAllCustomers(int page, int size, String searchText) {
-        List<Customer> customers = customerRepo.findAll();
+//        Page<Customer> customers = customerRepo.findAll(PageRequest.of(page, size));
+        Page<Customer> customers = customerRepo.searchAllByAddressOrName(searchText,PageRequest.of(page, size));
         List<ResponseCustomerDto> list = new ArrayList<>();
-        long recordCount = customerRepo.count();
+//        long recordCount = customerRepo.count();
+        long finalCount = customerRepo.countDataWithSearchText(searchText);
         for (Customer d : customers) {
             list.add(new ResponseCustomerDto(
                     d.getPublicId(),
@@ -121,6 +125,6 @@ public class CustomerServiceImpl implements CustomerService {
             ));
         }
 
-        return new CustomerPaginatedDto(recordCount, list);
+        return new CustomerPaginatedDto(finalCount, list);
     }
 }
