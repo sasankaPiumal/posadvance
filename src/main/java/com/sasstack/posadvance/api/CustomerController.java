@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/v1/customers") //consumes = {MediaType.APPLICATION_JSON_VALUE}
-public class CustomerController {
+public class   CustomerController {
 
     private final CustomerService customerService;
 
@@ -35,10 +35,9 @@ public class CustomerController {
 
     @PutMapping(
             params = {"id"}
-
     )
     public ResponseEntity<StandardResponse> updateCustomer(@RequestParam int id, @RequestBody RequestCustomerDto dto)
-            throws ClassNotFoundException {
+            {
         var updatedCustomer = customerService.updateCustomer(id, dto);
         return new ResponseEntity<>(
                 new StandardResponse(201, "Customer updated!", updatedCustomer),
@@ -58,7 +57,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<StandardResponse> findCustomer(@PathVariable long id) throws ClassNotFoundException {
+    public ResponseEntity<StandardResponse> findCustomer(@PathVariable long id) {
         return new ResponseEntity<>(
                 new StandardResponse(200, "Success!", customerService.findCustomer(id)),
                 HttpStatus.OK

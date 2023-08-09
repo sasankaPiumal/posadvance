@@ -7,9 +7,9 @@ import com.sasstack.posadvance.dto.response.paginated.model.CustomerPaginatedDto
 public interface CustomerService {
     public ResponseCustomerDto createCustomer(RequestCustomerDto dto);
 
-    public ResponseCustomerDto findCustomer(long id) throws ClassNotFoundException;
+    public ResponseCustomerDto findCustomer(long id);
 
-    public ResponseCustomerDto updateCustomer(long id, RequestCustomerDto dto) throws ClassNotFoundException;
+    public ResponseCustomerDto updateCustomer(long id, RequestCustomerDto dto);
 
     public void deleteCustomer(long id);
 
