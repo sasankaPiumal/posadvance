@@ -2,10 +2,8 @@ package com.sasstack.posadvance.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -41,6 +39,8 @@ public class User {
     @Column(name = "is_enabled",columnDefinition = "TINYINT")
     private boolean isEnabled;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private Set<UserRoleHasUser> userRoleHasUsers;
 
 
 
