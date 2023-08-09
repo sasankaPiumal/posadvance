@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface UserRoleRepo extends JpaRepository<UserRole,String> {
 
-    public void initializeRoles();
 }
