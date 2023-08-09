@@ -1,9 +1,9 @@
 package com.sasstack.posadvance.api;
 
+import com.sasstack.posadvance.dto.request.RequestUserDto;
+import com.sasstack.posadvance.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -12,12 +12,12 @@ public class UserController {
 
     private UserService userService;
 
-    public ResponseEntity<StackOverflowError> createUser(){
-
+    @PostMapping(params = "role")
+    public ResponseEntity<StackOverflowError> createUser(@RequestBody RequestUserDto requestUserDto,
+                                                         @RequestParam String role) {
+userService.createUser(requestUserDto,role);
 
     }
-
-
 
 
 }
