@@ -8,6 +8,7 @@ import com.sasstack.posadvance.exception.EntryNotFoundException;
 import com.sasstack.posadvance.repo.UserRepo;
 import com.sasstack.posadvance.repo.UserRoleRepo;
 import com.sasstack.posadvance.service.UserService;
+import com.sasstack.posadvance.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRoleRepo userRoleRepo;
 
+    private final UserMapper userMapper;
+
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo) {
+    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper userMapper) {
         this.userRepo = userRepo;
         this.userRoleRepo = userRoleRepo;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -45,7 +49,11 @@ public class UserServiceImpl implements UserService {
                     String.valueOf(new Random().nextInt(1000)),
                     requestUserDto.getEmail(),
                     requestUserDto.getFullName(),
-                    requestUserDto.getPassword());
+                    requestUserDto.getPassword()
+            );
+
+            userRepo.save(userMapper.toUser(dto));
+
         }
 
     }
