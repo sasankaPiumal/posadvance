@@ -2,10 +2,8 @@ package com.sasstack.posadvance.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -25,4 +23,7 @@ public class UserRole {
 
     @Column(name = "description",length = 250)
     private String description;
+
+    @OneToMany(mappedBy = "userRole",fetch = FetchType.LAZY)
+    private Set<UserRoleHasUser> userRoleHasUsers;
 }
