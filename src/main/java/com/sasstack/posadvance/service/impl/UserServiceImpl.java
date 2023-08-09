@@ -3,9 +3,11 @@ package com.sasstack.posadvance.service.impl;
 import com.sasstack.posadvance.dto.core.UserDto;
 import com.sasstack.posadvance.dto.request.RequestUserDto;
 import com.sasstack.posadvance.entity.User;
+import com.sasstack.posadvance.entity.UserRoleHasUser;
 import com.sasstack.posadvance.exception.DuplicateEntryException;
 import com.sasstack.posadvance.exception.EntryNotFoundException;
 import com.sasstack.posadvance.repo.UserRepo;
+import com.sasstack.posadvance.repo.UserRoleHasUserRepo;
 import com.sasstack.posadvance.repo.UserRoleRepo;
 import com.sasstack.posadvance.service.UserService;
 import com.sasstack.posadvance.util.mapper.UserMapper;
@@ -26,11 +28,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+    private final UserRoleHasUserRepo userRoleHasUserRepo;
+
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper userMapper) {
+    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper userMapper, UserRoleHasUserRepo userRoleHasUserRepo) {
         this.userRepo = userRepo;
         this.userRoleRepo = userRoleRepo;
         this.userMapper = userMapper;
+        this.userRoleHasUserRepo = userRoleHasUserRepo;
     }
 
     @Override
@@ -41,8 +46,8 @@ public class UserServiceImpl implements UserService {
         }
         {
 
-            Optional<User> userByEmail = userRepo.findUserByEmail(requestUserDto.getEmail());
-            if (userByEmail.isPresent()) {
+            Optional<User> selectedUserByEmail = userRepo.findUserByEmail(requestUserDto.getEmail());
+            if (selectedUserByEmail.isPresent()) {
                 throw new DuplicateEntryException("User Email Already Exists!");
             }
             UserDto dto = new UserDto(
@@ -51,8 +56,13 @@ public class UserServiceImpl implements UserService {
                     requestUserDto.getFullName(),
                     requestUserDto.getPassword()
             );
+            User user = userMapper.toUser(dto);
+            userRepo.save(user);
+            UserRoleHasUser userRoleHasUser = new UserRoleHasUser();
+            userRoleHasUser.setUser(user);
+            userRoleHasUser.setUserRole(selectedUserRole.get());
+            userRoleHasUserRepo.save(userRoleHasUser);
 
-            userRepo.save(userMapper.toUser(dto));
 
         }
 
