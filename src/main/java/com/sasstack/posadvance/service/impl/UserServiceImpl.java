@@ -12,6 +12,7 @@ import com.sasstack.posadvance.repo.UserRoleRepo;
 import com.sasstack.posadvance.service.UserService;
 import com.sasstack.posadvance.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,12 +31,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserRoleHasUserRepo userRoleHasUserRepo;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper userMapper, UserRoleHasUserRepo userRoleHasUserRepo) {
+    public UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper userMapper, UserRoleHasUserRepo userRoleHasUserRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.userRoleRepo = userRoleRepo;
         this.userMapper = userMapper;
         this.userRoleHasUserRepo = userRoleHasUserRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
                     String.valueOf(new Random().nextInt(1000)),
                     requestUserDto.getEmail(),
                     requestUserDto.getFullName(),
-                    requestUserDto.getPassword()
+                    passwordEncoder.encode(requestUserDto.getPassword())
             );
             User user = userMapper.toUser(dto);
             userRepo.save(user);
