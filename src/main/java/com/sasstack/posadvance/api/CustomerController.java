@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/v1/customers") //consumes = {MediaType.APPLICATION_JSON_VALUE}
-public class   CustomerController {
+public class CustomerController {
 
     private final CustomerService customerService;
 
@@ -36,8 +36,7 @@ public class   CustomerController {
     @PutMapping(
             params = {"id"}
     )
-    public ResponseEntity<StandardResponse> updateCustomer(@RequestParam int id, @RequestBody RequestCustomerDto dto)
-            {
+    public ResponseEntity<StandardResponse> updateCustomer(@RequestParam int id, @RequestBody RequestCustomerDto dto) {
         var updatedCustomer = customerService.updateCustomer(id, dto);
         return new ResponseEntity<>(
                 new StandardResponse(201, "Customer updated!", updatedCustomer),

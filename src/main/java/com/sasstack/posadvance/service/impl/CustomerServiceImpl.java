@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseCustomerDto findCustomer(long id)  {
+    public ResponseCustomerDto findCustomer(long id) {
         Optional<Customer> selectedCustomer = customerRepo.findByPublicId(id);
         if (selectedCustomer.isPresent()) {
             return customerMapper.toResponseCustomerDto(selectedCustomer.get());

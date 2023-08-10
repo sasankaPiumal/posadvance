@@ -22,12 +22,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public void initializeRoles() {
         List<UserRole> list = userRoleRepo.findAll();
-        if (list.isEmpty()){
-            UserRole admin = new UserRole("POS-R-1","ADMIN","",null);
-            UserRole user = new UserRole("POS-R-2","USER","",null);
-            UserRole manager = new UserRole("POS-R-3","MANAGER","",null);
+        if (list.isEmpty()) {
+            UserRole admin = new UserRole("POS-R-1", "ADMIN", "", null);
+            UserRole user = new UserRole("POS-R-2", "USER", "", null);
+            UserRole manager = new UserRole("POS-R-3", "MANAGER", "", null);
 
-            userRoleRepo.saveAll(List.of(admin,user,manager));
+            userRoleRepo.saveAll(List.of(admin, user, manager));
         }
 
 

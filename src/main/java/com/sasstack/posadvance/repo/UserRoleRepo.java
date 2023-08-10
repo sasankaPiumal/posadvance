@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 @EnableJpaRepositories
-public interface UserRoleRepo extends JpaRepository<UserRole,String> {
+public interface UserRoleRepo extends JpaRepository<UserRole, String> {
 
     public Optional<UserRole> findByRoleNameEquals(String role);
 }

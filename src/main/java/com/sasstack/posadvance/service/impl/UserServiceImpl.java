@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
             throw new EntryNotFoundException("User not found!");
         }
         {
-
             Optional<User> selectedUserByEmail = userRepo.findUserByEmail(requestUserDto.getEmail());
             if (selectedUserByEmail.isPresent()) {
                 throw new DuplicateEntryException("User Email Already Exists!");
